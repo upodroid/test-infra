@@ -508,11 +508,10 @@ periodics:
     description: Runs network tests using KIND against latest kubernetes master with a kubernetes-in-docker cluster using kube-proxy nftables
     testgrid-alert-email: antonio.ojea.garcia@gmail.com, kubernetes-sig-network-test-failures@googlegroups.com
     testgrid-num-columns-recent: '3'
-- interval: 24h
+- interval: 12h
   name: ci-kubernetes-kind-network-nftables-ipv6
-  cluster: eks-prow-build-cluster
+  cluster: k8s-infra-prow-build
   labels:
-    preset-service-account: "true"
     preset-dind-enabled: "true"
   decorate: true
   decoration_config:
@@ -524,12 +523,13 @@ periodics:
     path_alias: k8s.io/kubernetes
   spec:
     containers:
-    - image: gcr.io/k8s-staging-test-infra/krte:v20260720-39d457d26c-master
+    - image: us-central1-docker.pkg.dev/k8s-staging-test-infra/images/kubekins-e2e:v20260720-39d457d26c-master
       command:
-        - wrapper.sh
+        - runner.sh
+      args:
         - bash
         - -c
-        - curl -sSL https://kind.sigs.k8s.io/dl/latest/linux-amd64.tgz | tar xvfz - -C "${PATH%%:*}/" && e2e-k8s.sh
+        - curl -sSL https://kind.sigs.k8s.io/dl/latest/linux-$(go env GOARCH).tgz | tar xvfz - -C "${PATH%%:*}/" && e2e-k8s.sh
       env:
       # enable IPV6 in bootstrap image
       - name: "DOCKER_IN_DOCKER_IPV6_ENABLED"
@@ -548,6 +548,118 @@ periodics:
       # we need privileged mode in order to do docker in docker
       securityContext:
         privileged: true
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      resources:
+        limits:
+          cpu: 4
+          memory: 9Gi
+        requests:
+          cpu: 4
+          memory: 9Gi
+  annotations:
+    testgrid-dashboards: sig-network-kind, sig-testing-kind
+    testgrid-tab-name: sig-network-kind, nftables, IPv6, master
+    description: Runs network tests using KIND against latest kubernetes master with an IPv6 kubernetes-in-docker cluster using kube-proxy nftables
+    testgrid-alert-email: antonio.ojea.garcia@gmail.com, kubernetes-sig-network-test-failures@googlegroups.com
+    testgrid-num-columns-recent: '3'
+- interval: 12h
+  name: ci-kubernetes-kind-network-nftables-ipv6-eks
+  cluster: eks-prow-build-cluster
+  labels:
+    preset-dind-enabled: "true"
+  decorate: true
+  decoration_config:
+    timeout: 60m
+  extra_refs:
+  - org: kubernetes
+    repo: kubernetes
+    base_ref: master
+    path_alias: k8s.io/kubernetes
+  spec:
+    containers:
+    - image: us-central1-docker.pkg.dev/k8s-staging-test-infra/images/kubekins-e2e:v20260720-39d457d26c-master
+      command:
+        - runner.sh
+      args:
+        - bash
+        - -c
+        - curl -sSL https://kind.sigs.k8s.io/dl/latest/linux-$(go env GOARCH).tgz | tar xvfz - -C "${PATH%%:*}/" && e2e-k8s.sh
+      env:
+      # enable IPV6 in bootstrap image
+      - name: "DOCKER_IN_DOCKER_IPV6_ENABLED"
+        value: "true"
+      # tell kind CI script to use ipv6
+      - name: "IP_FAMILY"
+        value: "ipv6"
+      - name: KUBE_PROXY_MODE
+        value: "nftables"
+      - name: "PARALLEL"
+        value: "true"
+      - name: FOCUS
+        value: \[sig-network\]|\[Conformance\]
+      - name: SKIP
+        value: Alpha|Beta|LoadBalancer|Disruptive|Flaky|IPv6DualStack|Networking-IPv4|Internet.connection|LocalhostNodePorts
+      # we need privileged mode in order to do docker in docker
+      securityContext:
+        privileged: true
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      resources:
+        limits:
+          cpu: 4
+          memory: 9Gi
+        requests:
+          cpu: 4
+          memory: 9Gi
+  annotations:
+    testgrid-dashboards: sig-network-kind, sig-testing-kind
+    testgrid-tab-name: sig-network-kind, nftables, IPv6, master
+    description: Runs network tests using KIND against latest kubernetes master with an IPv6 kubernetes-in-docker cluster using kube-proxy nftables
+    testgrid-alert-email: antonio.ojea.garcia@gmail.com, kubernetes-sig-network-test-failures@googlegroups.com
+    testgrid-num-columns-recent: '3'
+- interval: 12h
+  name: ci-kubernetes-kind-network-nftables-ipv6-aks
+  cluster: k8s-infra-aks-prow-build
+  labels:
+    preset-dind-enabled: "true"
+  decorate: true
+  decoration_config:
+    timeout: 60m
+  extra_refs:
+  - org: kubernetes
+    repo: kubernetes
+    base_ref: master
+    path_alias: k8s.io/kubernetes
+  spec:
+    containers:
+    - image: us-central1-docker.pkg.dev/k8s-staging-test-infra/images/kubekins-e2e:v20260720-39d457d26c-master
+      command:
+        - runner.sh
+      args:
+        - bash
+        - -c
+        - curl -sSL https://kind.sigs.k8s.io/dl/latest/linux-$(go env GOARCH).tgz | tar xvfz - -C "${PATH%%:*}/" && e2e-k8s.sh
+      env:
+      # enable IPV6 in bootstrap image
+      - name: "DOCKER_IN_DOCKER_IPV6_ENABLED"
+        value: "true"
+      # tell kind CI script to use ipv6
+      - name: "IP_FAMILY"
+        value: "ipv6"
+      - name: KUBE_PROXY_MODE
+        value: "nftables"
+      - name: "PARALLEL"
+        value: "true"
+      - name: FOCUS
+        value: \[sig-network\]|\[Conformance\]
+      - name: SKIP
+        value: Alpha|Beta|LoadBalancer|Disruptive|Flaky|IPv6DualStack|Networking-IPv4|Internet.connection|LocalhostNodePorts
+      # we need privileged mode in order to do docker in docker
+      securityContext:
+        privileged: true
+      nodeSelector:
+        kubernetes.io/arch: amd64
       resources:
         limits:
           cpu: 4
