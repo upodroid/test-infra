@@ -40,6 +40,7 @@ periodics:
     preset-aws-ssh: "true"
     preset-aws-credential-boskos-scale-001-kops: "true"
     preset-kops-scalability-common: "true"
+    preset-kops-scalability-common-5000-node: "true"
     preset-kops-scalability-ec2-common: "true"
     preset-kops-scalability-ec2-5000-node: "true"
   decorate: true
@@ -281,6 +282,7 @@ periodics:
     preset-aws-ssh: "true"
     preset-aws-credential-boskos-scale-001-kops: "true"
     preset-kops-scalability-common: "true"
+    preset-kops-scalability-common-5000-node: "true"
     preset-kops-scalability-ec2-common: "true"
     preset-kops-scalability-ec2-5000-node: "true"
     preset-kops-scalability-ec2-experimental: "true"

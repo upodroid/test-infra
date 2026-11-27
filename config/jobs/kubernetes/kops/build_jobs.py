@@ -1900,6 +1900,7 @@ def generate_presubmits_scale():
             use_preset_for_account_creds='preset-aws-credential-boskos-scale-001-kops',
             presets=[
                 'preset-kops-scalability-common',
+                'preset-kops-scalability-common-5000-node',
                 'preset-kops-scalability-ec2-common',
                 'preset-kops-scalability-ec2-5000-node',
             ],
@@ -1926,6 +1927,7 @@ def generate_presubmits_scale():
             presets=[
                 'preset-kops-scalability-common',
                 'preset-kops-scalability-ec2-common',
+                'preset-kops-scalability-common-5000-node',
                 'preset-kops-scalability-ec2-5000-node',
                 'preset-kops-scalability-ec2-experimental',
             ],
@@ -2039,6 +2041,7 @@ def generate_presubmits_scale():
             presets=[
                 'preset-kops-scalability-common',
                 'preset-kops-scalability-gce-common',
+                'preset-kops-scalability-common-5000-node',
                 'preset-kops-scalability-gce-5000-node',
             ],
             tolerations=[{

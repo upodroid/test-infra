@@ -74,6 +74,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-kops-scalability-common: "true"
       preset-kops-scalability-gce-common: "true"
+      preset-kops-scalability-common-5000-node: "true"
       preset-kops-scalability-gce-5000-node: "true"
       preset-kops-scalability-gce-experimental: "true"
     job_queue_name: "5k-gce-scale-test" # DON'T REMOVE THIS

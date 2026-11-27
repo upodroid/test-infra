@@ -271,6 +271,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-kops-scalability-common: "true"
       preset-kops-scalability-gce-common: "true"
+      preset-kops-scalability-common-5000-node: "true"
       preset-kops-scalability-gce-5000-node: "true"
     job_queue_name: "5k-gce-scale-test" # DON'T REMOVE THIS
     decoration_config:
@@ -929,6 +930,7 @@ presubmits:
       preset-aws-ssh: "true"
       preset-aws-credential-boskos-scale-001-kops: "true"
       preset-kops-scalability-common: "true"
+      preset-kops-scalability-common-5000-node: "true"
       preset-kops-scalability-ec2-common: "true"
       preset-kops-scalability-ec2-5000-node: "true"
     decorate: true
@@ -1066,6 +1068,7 @@ presubmits:
       preset-kops-scalability-common: "true"
       preset-kops-scalability-gce-common: "true"
       preset-kops-scalability-gce-5000-node: "true"
+      preset-kops-scalability-common-5000-node: "true"
     decorate: true
     decoration_config:
       timeout: 480m
@@ -1116,6 +1119,7 @@ presubmits:
       preset-kops-scalability-gce-common: "true"
       preset-kops-scalability-gce-5000-node: "true"
       preset-kops-scalability-gce-experimental: "true"
+      preset-kops-scalability-common-5000-node: "true"
     decorate: true
     decoration_config:
       timeout: 480m
